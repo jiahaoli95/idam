@@ -125,9 +125,6 @@ def main():
     parser = argparse.ArgumentParser(description='Point Cloud Registration')
     parser.add_argument('--exp_name', type=str, default='exp', metavar='N',
                         help='Name of the experiment')
-    parser.add_argument('--model', type=str, default='dcp', metavar='N',
-                        choices=['dcp'],
-                        help='Model to use, [dcp]')
     parser.add_argument('--num_iter', type=int, default=3, metavar='N',
                         help='Number of iteration inside the network')
     parser.add_argument('--emb_nn', type=str, default='GNN', metavar='N',
@@ -144,7 +141,7 @@ def main():
                         help='Test on unseen categories')
     parser.add_argument('--gaussian_noise', type=arg_bool, default='False',
                         help='Wheter to add gaussian noise')
-    parser.add_argument('--alpha', type=float, default=0.7, metavar='N',
+    parser.add_argument('--alpha', type=float, default=0.75, metavar='N',
                         help='Fraction of points when sampling partial point cloud')
     parser.add_argument('--factor', type=float, default=4, metavar='N',
                         help='Divided factor for rotations')

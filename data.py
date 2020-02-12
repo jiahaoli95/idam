@@ -92,8 +92,7 @@ def random_Rt(angle):
 
 
 class ModelNet40(Dataset):
-    def __init__(self, num_points=1024, partition='train',
-                 gaussian_noise=False, alpha=0.7, unseen=False, factor=4):
+    def __init__(self, num_points=1024, partition='train', gaussian_noise=False, alpha=0.75, unseen=False, factor=4):
         super(ModelNet40, self).__init__()
 
         self.num_points = num_points
@@ -103,10 +102,11 @@ class ModelNet40(Dataset):
         self.rot_factor = factor
 
         if self.unseen:
-            data1, label1 = load_data('train')
-            data2, label2 = load_data('test')
-            self.data = np.concatenate([data1, data2], 0)
-            self.label = np.concatenate([label1, label2], 0)
+            # data1, label1 = load_data('train')
+            # data2, label2 = load_data('test')
+            # self.data = np.concatenate([data1, data2], 0)
+            # self.label = np.concatenate([label1, label2], 0)
+            self.data, self.label = load_data(partition)
             self.label = self.label.squeeze()
             if self.partition == 'test':
                 self.data = self.data[self.label>=20]
@@ -150,7 +150,3 @@ class ModelNet40(Dataset):
 
     def __len__(self):
         return self.data.shape[0]
-
-
-if __name__ == '__main__':
-    print('hello world')
