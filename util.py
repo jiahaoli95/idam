@@ -5,7 +5,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-from torch_cluster import fps
 import numpy as np
 from scipy.spatial.transform import Rotation
 
