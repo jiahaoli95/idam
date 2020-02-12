@@ -142,7 +142,7 @@ def main():
                         help='number of episode to train ')
     parser.add_argument('--unseen', type=arg_bool, default='True',
                         help='Test on unseen categories')
-    parser.add_argument('--gaussian_noise', type=arg_bool, default='True',
+    parser.add_argument('--gaussian_noise', type=arg_bool, default='False',
                         help='Wheter to add gaussian noise')
     parser.add_argument('--alpha', type=float, default=0.7, metavar='N',
                         help='Fraction of points when sampling partial point cloud')
