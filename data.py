@@ -124,9 +124,9 @@ class ModelNet40(Dataset):
 
     def __getitem__(self, item):
         pointcloud1 = self.data[item].T
-        R, t, _ = random_Rt(np.pi)
-        pointcloud1 = np.matmul(R, pointcloud1) + t[:, np.newaxis]
-        del R, t
+        # R, t, _ = random_Rt(np.pi)
+        # pointcloud1 = np.matmul(R, pointcloud1) + t[:, np.newaxis]
+        # del R, t
 
         R_ab, translation_ab, euler_ab = random_Rt(np.pi/self.rot_factor)
         # rotation_ab = Rotation.from_euler('zyx', [anglez, angley, anglex])
