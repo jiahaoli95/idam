@@ -119,7 +119,7 @@ class ModelNet40(Dataset):
         else:
             self.data, self.label = load_data(partition)
             self.label = self.label.squeeze()
-        self.data = self.data[:, :1024]
+        self.data = self.data[:, :self.num_points]
         self.num_subsampled_points = int(self.data.shape[1]*alpha)
 
     def __getitem__(self, item):
