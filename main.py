@@ -102,8 +102,8 @@ def train_one_epoch(args, net, train_loader, opt):
 
 
 def train(args, net, train_loader, test_loader):
-    opt = optim.Adam(net.parameters(), lr=0.001, weight_decay=0.0001) # debug
-    # scheduler = MultiStepLR(opt, milestones=[20, 40], gamma=0.1)
+    opt = optim.Adam(net.parameters(), lr=0.001, weight_decay=0.1) # debug
+    scheduler = MultiStepLR(opt, milestones=[20, 40], gamma=0.1) # debug
 
 
     for epoch in range(args.epochs):
