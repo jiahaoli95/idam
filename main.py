@@ -173,7 +173,7 @@ def main():
     if args.emb_nn == 'GNN':
         net = IDAM(GNN(args.emb_dims), args).cuda()
     elif args.emb_nn == 'FPFH':
-        assert args.emb_dims == 33
+        args.emb_dims = 33
         net = IDAM(FPFH(), args).cuda()
     ##### load model #####
 
