@@ -136,7 +136,7 @@ def main():
                         help='Size of batch)')
     parser.add_argument('--test_batch_size', type=int, default=16, metavar='batch_size',
                         help='Size of batch)')
-    parser.add_argument('--epochs', type=int, default=50, metavar='N',
+    parser.add_argument('--epochs', type=int, default=20, metavar='N',
                         help='number of episode to train ')
     parser.add_argument('--unseen', type=arg_bool, default='True',
                         help='Test on unseen categories')
