@@ -86,11 +86,18 @@ class IDAM_GNN():
         self.net.eval()
 
     def __call__(self, src, tgt):
+        print('debug')
+        start = time.time()
         src = torch.from_numpy(src).float().cuda()
         tgt = torch.from_numpy(tgt).float().cuda()
+        print('a', time.time()-start)
+        start = time.time()
         R, t, _ = self.net(src, tgt)
+        print('b', time.time()-start)
+        start = time.time()
         R = R.cpu().numpy()
         t = t.cpu().numpy()
+        print('c', time.time()-start)
         return R, t
 
 
@@ -114,7 +121,7 @@ def test_time(net, test_data):
 
 if __name__ == '__main__':
     ####### Things to configure ######
-    num_points = 512
+    num_points = 1024
     factor = 4
     batch_size = 16
     # model = DCPModel('dcp/checkpoints/wwi/models/model.best.t7')
@@ -122,7 +129,7 @@ if __name__ == '__main__':
     # model = PRnetModel()
     # model = IDAM_FPFH()
     # model = ICPModel()
-    model = FGRModel()
+    model = IDAM_GNN()
     ####### Things to configure ######
 
 
