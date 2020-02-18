@@ -213,7 +213,7 @@ class IDAM(nn.Module):
         ##### get embedding and significance score #####
 
         ##### hard point elimination #####
-        num_point_preserved = src.size(-1) // 128 # debug
+        num_point_preserved = src.size(-1) // 8 # debug
         if self.training:
             candidates = np.tile(np.arange(src.size(-1)), (src.size(0), 1))
             pos_idx = batch_choice(candidates, num_point_preserved//2, p=pos_probs)
