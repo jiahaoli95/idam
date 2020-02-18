@@ -14,48 +14,6 @@ import torch
 from torch.utils.data import DataLoader
 from model import IDAM, FPFH, GNN
 
-from eval_open3d_models import ICPModel, FGRModel
-from eval_dcp_model import DCPModel
-from eval_pointnetlk_model import PointNetLKModel
-
-from prnet.model import PRNet
-
-class PRnetModel():
-    def __init__(self):
-        args = types.SimpleNamespace()
-        args.n_iters = 3
-        args.discount_factor = 0.9
-        args.feature_alignment_loss = 0.1
-        args.cycle_consistency_loss = 0.1
-        model_path = 'prnet/checkpoints/ss/models/model.best.t7'
-        args.n_emb_dims = 512
-        args.n_keypoints = 512
-        args.n_subsampled_points = 512
-        args.emb_nn = 'dgcnn'
-        args.attention = 'transformer'
-        args.head = 'svd'
-        args.n_blocks = 1
-        args.n_heads = 4
-        args.dropout = 0.0
-        args.n_ff_dims = 1024
-        args.temp_factor = 100
-        args.cat_sampler = 'gumbel_softmax'
-        self.net = PRNet(args).cuda()
-        self.net.load_state_dict(torch.load(model_path), strict=False)
-        self.net.eval()
-
-    def __call__(self, src, tgt):
-        src = torch.from_numpy(src).float().cuda()
-        tgt = torch.from_numpy(tgt).float().cuda()
-        R, t, *_ = self.net(src, tgt)
-        R = R.squeeze(0).detach().cpu().numpy()
-        t = t.squeeze(0).detach().cpu().numpy()
-        return R, t
-
-
-
-
-
 class IDAM_FPFH():
     def __init__(self):
         args = types.SimpleNamespace()
@@ -84,6 +42,7 @@ class IDAM_GNN():
         model_path = 'checkpoints/exp/models/model.19.t7'
         self.net.load_state_dict(torch.load(model_path), strict=True)
         self.net.eval()
+        print('debug') # debug
 
     def __call__(self, src, tgt):
         print('debug')
@@ -121,9 +80,9 @@ def test_time(net, test_data):
 
 if __name__ == '__main__':
     ####### Things to configure ######
-    num_points = 1024
+    num_points = 2048
     factor = 4
-    batch_size = 16
+    batch_size = 1 # debug
     # model = DCPModel('dcp/checkpoints/wwi/models/model.best.t7')
     # model = PointNetLKModel('PointNetLK/experiments/our_exp/results/ex1_pointlk_0915_wwi_model_last.pth')
     # model = PRnetModel()
