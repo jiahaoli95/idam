@@ -45,7 +45,7 @@ def load_data(partition):
 
 def jitter_pointcloud(pointcloud, sigma=0.01, clip=0.05):
     N, C = pointcloud.shape
-    pointcloud += np.clip(sigma * np.random.randn(N, C), -1 * clip, clip)
+    pointcloud = pointcloud + np.clip(sigma * np.random.randn(N, C), -1 * clip, clip)
     return pointcloud
 
 

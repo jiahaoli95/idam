@@ -108,20 +108,22 @@ class Propagate(nn.Module):
 
 
 class GNN(nn.Module):
-    def __init__(self, emb_dims=128):
+    def __init__(self, emb_dims=64):
         super(GNN, self).__init__()
         self.propogate1 = Propagate(3, 64)
         self.propogate2 = Propagate(64, 64)
         self.propogate3 = Propagate(64, 64)
         self.propogate4 = Propagate(64, 64)
+        self.propogate5 = Propagate(64, emb_dims)
 
     def forward(self, x):
-        nn_idx = knn(x, k=8)
+        nn_idx = knn(x, k=12)
 
         x = self.propogate1(x, nn_idx)
         x = self.propogate2(x, nn_idx)
         x = self.propogate3(x, nn_idx)
         x = self.propogate4(x, nn_idx)
+        x = self.propogate5(x, nn_idx)
 
         return x
 
@@ -213,7 +215,7 @@ class IDAM(nn.Module):
         ##### get embedding and significance score #####
 
         ##### hard point elimination #####
-        num_point_preserved = src.size(-1) // 12 # debug
+        num_point_preserved = src.size(-1) // 6 # debug
         if self.training:
             candidates = np.tile(np.arange(src.size(-1)), (src.size(0), 1))
             pos_idx = batch_choice(candidates, num_point_preserved//2, p=pos_probs)
@@ -308,7 +310,7 @@ class IDAM(nn.Module):
                 loss = loss + weight_loss
             ##### soft point elimination loss #####
 
-            ##### normalize weights #####
+            ##### hybrid point elimination #####
             # weights = -1 / ((similarity_matrix * torch.log(similarity_matrix)).sum(-1) + 1e-8)
             # weights = torch.ones(similarity_matrix.size(0), similarity_matrix.size(1)).cuda()
             weights = torch.sigmoid(weights)

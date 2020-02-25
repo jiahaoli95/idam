@@ -102,9 +102,9 @@ def train_one_epoch(args, net, train_loader, opt):
 
 
 def train(args, net, train_loader, test_loader):
-    opt = optim.Adam(net.parameters(), lr=0.0001, weight_decay=0.1) # debug
+    opt = optim.Adam(net.parameters(), lr=0.0001, weight_decay=0.001) # debug
     # opt = optim.SGD(net.parameters(), lr=0.001, momentum=0.9, weight_decay=0.00001) # debug
-    # scheduler = MultiStepLR(opt, milestones=[40], gamma=0.1) # debug
+    scheduler = MultiStepLR(opt, milestones=[30], gamma=0.1) # debug
 
 
     for epoch in range(args.epochs):
@@ -118,7 +118,7 @@ def train(args, net, train_loader, test_loader):
 
         torch.save(net.state_dict(), 'checkpoints/%s/models/model.%d.t7' % (args.exp_name, epoch))
 
-        # scheduler.step()
+        scheduler.step()
 
 
 def main():
@@ -136,9 +136,9 @@ def main():
                         help='Size of batch)')
     parser.add_argument('--test_batch_size', type=int, default=16, metavar='batch_size',
                         help='Size of batch)')
-    parser.add_argument('--epochs', type=int, default=20, metavar='N',
+    parser.add_argument('--epochs', type=int, default=40, metavar='N',
                         help='number of episode to train ')
-    parser.add_argument('--unseen', type=arg_bool, default='True',
+    parser.add_argument('--unseen', type=arg_bool, default='False',
                         help='Test on unseen categories')
     parser.add_argument('--gaussian_noise', type=arg_bool, default='False',
                         help='Wheter to add gaussian noise')
