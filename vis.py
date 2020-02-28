@@ -22,21 +22,21 @@ def crop(path, save_path):
     Image.fromarray(im).save(save_path)
 
 
-def arrange(paths, save_path, ncol=5, margin=20):
+def arrange(paths, save_path, ncol=5, row_margin=20, col_margin=20):
     im_list = [Image.open(x) for x in paths]
     w = int(min([x.size[0] for x in im_list]) * 0.9)
     h = int(min([x.size[1] for x in im_list]) * 0.9)
     im_list = [x.resize((w, h), Image.BILINEAR) for x in im_list]
     arr_list = [np.array(im)[:, :, :3] for im in im_list]
     nrow = int(np.ceil(len(arr_list)/ncol))
-    grid_h = nrow * h + (nrow - 1) * margin
-    grid_w = ncol * w + (ncol - 1) * margin
+    grid_h = nrow * h + (nrow - 1) * row_margin
+    grid_w = ncol * w + (ncol - 1) * col_margin
     grid = np.ones((grid_h, grid_w, 3), dtype=np.uint8) * 255
     for i in range(len(arr_list)):
         row_idx = i // ncol
         col_idx = i % ncol
-        min_y = (h + margin) * row_idx
-        min_x = (w + margin) * col_idx
+        min_y = (h + row_margin) * row_idx
+        min_x = (w + col_margin) * col_idx
         grid[min_y:min_y+h, min_x:min_x+w] = arr_list[i]
     Image.fromarray(grid).save(save_path)
 
