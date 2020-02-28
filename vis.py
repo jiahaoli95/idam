@@ -41,5 +41,18 @@ def arrange(paths, save_path, ncol=5, margin=20):
     Image.fromarray(grid).save(save_path)
 
 
+def rm_bg(path, save_path):
+    thr = 180
+    assert save_path.endswith('.png')
+    im = Image.open(path)
+    w, h = im.size
+    im = np.array(im)[:, :, :3]
+    mask = im.astype(np.float32).mean(-1) < thr
+    alpha = np.zeros((h, w, 1), dtype=np.uint8)
+    alpha[mask] = 255
+    im = np.concatenate([im, alpha], -1)
+    Image.fromarray(im).save(save_path)
+
+
 if __name__ == '__main__':
     pass
