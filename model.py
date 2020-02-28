@@ -176,9 +176,9 @@ class IDAM(nn.Module):
         # self.emb_nn = GNN(emb_dims=self.emb_dims)
         self.emb_nn = emb_nn
         self.significance_fc = Conv1DBlock((self.emb_dims, 64, 32, 1), 1)
-        self.sim_mat_conv1 = nn.ModuleList([Conv2DBlock((self.emb_dims*2+4, 64, 64), 1) for _ in range(self.num_iter)])
-        self.sim_mat_conv2 = nn.ModuleList([Conv2DBlock((64, 32, 1), 1) for _ in range(self.num_iter)])
-        self.weight_fc = nn.ModuleList([Conv1DBlock((64, 32, 1), 1) for _ in range(self.num_iter)])
+        self.sim_mat_conv1 = nn.ModuleList([Conv2DBlock((self.emb_dims*2+4, 32, 32), 1) for _ in range(self.num_iter)])
+        self.sim_mat_conv2 = nn.ModuleList([Conv2DBlock((32, 32, 1), 1) for _ in range(self.num_iter)])
+        self.weight_fc = nn.ModuleList([Conv1DBlock((32, 32, 1), 1) for _ in range(self.num_iter)])
         # self.sim_mat_conv1 = nn.ModuleList([Conv2DBlock((self.emb_dims*2+4, 64, 64), 1)]*self.num_iter)
         # self.sim_mat_conv2 = nn.ModuleList([Conv2DBlock((64, 32, 1), 1)]*self.num_iter)
         # self.weight_fc = nn.ModuleList([Conv1DBlock((64, 32, 1), 1)]*self.num_iter)

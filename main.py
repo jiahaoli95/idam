@@ -148,6 +148,7 @@ def main():
                         help='Divided factor for rotations')
 
     args = parser.parse_args()
+    print(args)
 
     ##### make checkpoint directory and backup #####
     if not os.path.exists('checkpoints'):
