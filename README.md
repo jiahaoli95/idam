@@ -22,12 +22,11 @@ python main.py --exp_name exp
 This command will run an experiment with all the options set to default. You can see at the end of main.py a list of options that can be used to control hyperparameters of the model and experiment settings. The comments in the file should be enough to understand them.
 
 ## Citation
-Please cite this paper if you want to use it in your work,
+If you want to use it in your work, please cite it as
 
 	@InProceedings{idam,
 	  title={Iterative Distance-Aware Similarity Matrix Convolution with Mutual-Supervised Point Elimination for Efficient Point Cloud Registration},
 	  author={Li, Jiahao and Zhang, Changhao and Xu, Ziyao and Zhou, Hangning and Zhang, Chi},
 	  booktitle = {European Conference on Computer Vision (ECCV)},
-	  month = {July},
 	  year={2020}
 	}
