@@ -1,4 +1,4 @@
 *.*.bak*
 __pycache__
-data/*
+data/
 checkpoints/
