@@ -14,7 +14,7 @@ Open3D 0.7.0.0
 
 tqdm
 
-## Use
+## Usage
 The easiest way to run the code is using the following command
 ```
 python main.py --exp_name exp
