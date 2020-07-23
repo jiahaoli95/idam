@@ -3,6 +3,8 @@ This is the official code repository for ECCV 2020 paper "Iterative Distance-Awa
 
 [![model.png](https://s7.gifyu.com/images/model.png)](https://gifyu.com/image/WkbF)
 
+[![elimination.png](https://s7.gifyu.com/images/elimination.png)](https://gifyu.com/image/WkbY)
+
 ## Environment
 We recommend using Anaconda to set up common packages such as numpy and scipy. The following packages are required but not installed by default by Anaconda. We list the version numbers of the packages that we use on our machine, but other versions should work, possibly with minor modification:
 
