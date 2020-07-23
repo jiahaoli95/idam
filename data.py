@@ -59,7 +59,7 @@ def farthest_subsample_points(pointcloud1, pointcloud2, num_subsampled_points=76
     idx1 = nbrs1.kneighbors(random_p1, return_distance=False).reshape((num_subsampled_points,))
     nbrs2 = NearestNeighbors(n_neighbors=num_subsampled_points, algorithm='auto',
                              metric=lambda x, y: minkowski(x, y)).fit(pointcloud2)
-    random_p2 = random_p1 #np.random.random(size=(1, 3)) + np.array([[500, 500, 500]]) * np.random.choice([1, -1, 2, -2])
+    random_p2 = random_p1
     idx2 = nbrs2.kneighbors(random_p2, return_distance=False).reshape((num_subsampled_points,))
     return pointcloud1[idx1, :].T, pointcloud2[idx2, :].T
 
@@ -102,10 +102,6 @@ class ModelNet40(Dataset):
         self.rot_factor = factor
 
         if self.unseen:
-            # data1, label1 = load_data('train')
-            # data2, label2 = load_data('test')
-            # self.data = np.concatenate([data1, data2], 0)
-            # self.label = np.concatenate([label1, label2], 0)
             self.data, self.label = load_data(partition)
             self.label = self.label.squeeze()
             if self.partition == 'test':
@@ -124,17 +120,8 @@ class ModelNet40(Dataset):
 
     def __getitem__(self, item):
         pointcloud1 = self.data[item].T
-        # R, t, _ = random_Rt(np.pi)
-        # pointcloud1 = np.matmul(R, pointcloud1) + t[:, np.newaxis]
-        # del R, t
-
         R_ab, translation_ab, euler_ab = random_Rt(np.pi/self.rot_factor)
-        # rotation_ab = Rotation.from_euler('zyx', [anglez, angley, anglex])
-        # pointcloud2 = rotation_ab.apply(pointcloud1.T).T + np.expand_dims(translation_ab, axis=1)
         pointcloud2 = np.matmul(R_ab, pointcloud1) + translation_ab[:, np.newaxis]
-
-        # euler_ab = np.asarray([anglez, angley, anglex])
-
         pointcloud1 = np.random.permutation(pointcloud1.T).T
         pointcloud2 = np.random.permutation(pointcloud2.T).T
 

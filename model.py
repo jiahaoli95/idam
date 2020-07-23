@@ -10,8 +10,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 from util import knn, batch_choice
-import open3d as o3d # debug
-from open3d.open3d.geometry import estimate_normals # debug
+import open3d as o3d
+from open3d.open3d.geometry import estimate_normals
 
 
 class FPFH(nn.Module):
@@ -173,15 +173,11 @@ class IDAM(nn.Module):
         super(IDAM, self).__init__()
         self.emb_dims = args.emb_dims
         self.num_iter = args.num_iter
-        # self.emb_nn = GNN(emb_dims=self.emb_dims)
         self.emb_nn = emb_nn
         self.significance_fc = Conv1DBlock((self.emb_dims, 64, 32, 1), 1)
         self.sim_mat_conv1 = nn.ModuleList([Conv2DBlock((self.emb_dims*2+4, 32, 32), 1) for _ in range(self.num_iter)])
         self.sim_mat_conv2 = nn.ModuleList([Conv2DBlock((32, 32, 1), 1) for _ in range(self.num_iter)])
         self.weight_fc = nn.ModuleList([Conv1DBlock((32, 32, 1), 1) for _ in range(self.num_iter)])
-        # self.sim_mat_conv1 = nn.ModuleList([Conv2DBlock((self.emb_dims*2+4, 64, 64), 1)]*self.num_iter)
-        # self.sim_mat_conv2 = nn.ModuleList([Conv2DBlock((64, 32, 1), 1)]*self.num_iter)
-        # self.weight_fc = nn.ModuleList([Conv1DBlock((64, 32, 1), 1)]*self.num_iter)
         self.head = SVDHead(args=args)
 
 
@@ -215,7 +211,7 @@ class IDAM(nn.Module):
         ##### get embedding and significance score #####
 
         ##### hard point elimination #####
-        num_point_preserved = src.size(-1) // 6 # debug
+        num_point_preserved = src.size(-1) // 6
         if self.training:
             candidates = np.tile(np.arange(src.size(-1)), (src.size(0), 1))
             pos_idx = batch_choice(candidates, num_point_preserved//2, p=pos_probs)
@@ -249,12 +245,9 @@ class IDAM(nn.Module):
 
             ##### stack features #####
             batch_size, num_dims, num_points = src_embedding.size()
-            # d_k = src_embedding.size(1)
-            # similarity_matrix = torch.matmul(src_embedding.transpose(2, 1).contiguous(), tgt_embedding) / math.sqrt(d_k)
             _src_emb = src_embedding.unsqueeze(-1).repeat(1, 1, 1, num_points)
             _tgt_emb = tgt_embedding.unsqueeze(-2).repeat(1, 1, num_points, 1)
             similarity_matrix = torch.cat([_src_emb, _tgt_emb], 1)
-            # similarity_matrix = _src_emb * _tgt_emb # debug
             ##### stack features #####
 
             ##### compute distances #####
@@ -311,8 +304,6 @@ class IDAM(nn.Module):
             ##### soft point elimination loss #####
 
             ##### hybrid point elimination #####
-            # weights = -1 / ((similarity_matrix * torch.log(similarity_matrix)).sum(-1) + 1e-8)
-            # weights = torch.ones(similarity_matrix.size(0), similarity_matrix.size(1)).cuda()
             weights = torch.sigmoid(weights)
             weights = weights * (weights >= weights.median(-1, keepdim=True)[0]).float()
             weights = weights / (weights.sum(-1, keepdim=True) + 1e-8)

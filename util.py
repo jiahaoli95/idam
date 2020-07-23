@@ -9,16 +9,6 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 
-# debug
-def batch_fps(x, ratio):
-    # [B, N, D]
-    res = []
-    for i in range(x.size(0)):
-        res.append(fps(x[i], ratio=ratio, random_start=False))
-    res = torch.stack(res, 0)
-    return res
-
-
 def quat2mat(quat):
     x, y, z, w = quat[:, 0], quat[:, 1], quat[:, 2], quat[:, 3]
 

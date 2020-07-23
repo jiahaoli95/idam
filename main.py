@@ -13,7 +13,7 @@ import numpy as np
 from tqdm import tqdm
 
 
-torch.backends.cudnn.enabled = False # debug, fix cudnn non-contiguous error
+torch.backends.cudnn.enabled = False # fix cudnn non-contiguous error
 
 
 def test_one_epoch(args, net, test_loader):
@@ -102,9 +102,8 @@ def train_one_epoch(args, net, train_loader, opt):
 
 
 def train(args, net, train_loader, test_loader):
-    opt = optim.Adam(net.parameters(), lr=0.0001, weight_decay=0.001) # debug
-    # opt = optim.SGD(net.parameters(), lr=0.001, momentum=0.9, weight_decay=0.00001) # debug
-    scheduler = MultiStepLR(opt, milestones=[30], gamma=0.1) # debug
+    opt = optim.Adam(net.parameters(), lr=0.0001, weight_decay=0.001)
+    scheduler = MultiStepLR(opt, milestones=[30], gamma=0.1)
 
 
     for epoch in range(args.epochs):
