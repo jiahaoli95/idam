@@ -1,0 +1,2 @@
+# Code for Iterative Distance-Aware Similarity Matrix Convolution with Mutual-Supervised Point Elimination for Efficient Point Cloud Registration (ECCV 2020)
+This is the official code repository for ECCV 2020 paper "Iterative Distance-Aware Similarity Matrix Convolution with Mutual-Supervised Point Elimination for Efficient Point Cloud Registration" [[arxiv](https://arxiv.org/abs/1910.10328)]. The code is largely adapted from https://github.com/WangYueFt/dcp and https://github.com/WangYueFt/prnet.
