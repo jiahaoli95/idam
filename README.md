@@ -1,6 +1,8 @@
 # Code for Iterative Distance-Aware Similarity Matrix Convolution with Mutual-Supervised Point Elimination for Efficient Point Cloud Registration (ECCV 2020)
 This is the official code repository for ECCV 2020 paper "Iterative Distance-Aware Similarity Matrix Convolution with Mutual-Supervised Point Elimination for Efficient Point Cloud Registration" [[arxiv](https://arxiv.org/abs/1910.10328)]. The code is largely adapted from https://github.com/WangYueFt/dcp and https://github.com/WangYueFt/prnet.
 
+[![model.png](https://s7.gifyu.com/images/model.png)](https://gifyu.com/image/WkbF)
+
 ## Environment
 We recommend using Anaconda to set up common packages such as numpy and scipy. The following packages are required but not installed by default by Anaconda. We list the version numbers of the packages that we use on our machine, but other versions should work, possibly with minor modification:
 
